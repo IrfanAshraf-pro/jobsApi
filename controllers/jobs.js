@@ -21,7 +21,6 @@ const getJob = async (req, res) => {
 
 const createJob = async (req, res) => {
   req.body.createdBy = req.user.userId;
-  console.log("DATA ", req.body, req.user);
   const job = await Job.create(req.body);
   res.status(StatusCodes.CREATED).json(job);
 };
@@ -57,7 +56,6 @@ const deleteJob = async (req, res) => {
     params: { id: jobId },
   } = req;
   const job = await Job.findOneAndRemove({ createdBy: userId, _id: jobId });
-  console.log("JOB DELETE IS ", job)
   if(!job) {
     throw new NotFoundError(`No job with id: ${jobId}`)
   }
